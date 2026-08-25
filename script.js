@@ -1,9 +1,9 @@
 const API_URL = "http://localhost:3000";
 
-const RODADA_ID = 1;
-const SALA_ID = 2;
+const TERMINAL_ID = 2;
 
 const buscarBtn = document.getElementById("buscarBtn");
+const concluirBtn = document.getElementById("concluirBtn");
 
 const caractere1 = document.getElementById("caractere1");
 const caractere2 = document.getElementById("caractere2");
@@ -18,7 +18,7 @@ async function buscarCodigo() {
     try {
 
         const resposta = await fetch(
-            `${API_URL}/senha/sala/${SALA_ID}?rodadaId=${RODADA_ID}`
+            `${API_URL}/terminal/${TERMINAL_ID}`
         );
 
         if (!resposta.ok) {
@@ -61,4 +61,48 @@ async function buscarCodigo() {
 }
 
 
+async function concluirTerminal() {
+
+    status.textContent = "Concluindo...";
+
+    try {
+
+        const resposta = await fetch(
+            `${API_URL}/terminal/${TERMINAL_ID}/concluir`,
+            {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json"
+                }
+            }
+        );
+
+        if (!resposta.ok) {
+
+            const erro = await resposta.json();
+
+            throw new Error(
+                erro.mensagem || "Erro ao concluir o terminal"
+            );
+        }
+
+        const dados = await resposta.json();
+
+        console.log("Terminal concluído:", dados);
+
+        status.textContent = "Terminal concluído com sucesso!";
+
+    } catch (erro) {
+
+        console.error(
+            "Erro ao concluir o terminal:",
+            erro
+        );
+
+        status.textContent = `Erro: ${erro.message}`;
+    }
+}
+
+
 buscarBtn.addEventListener("click", buscarCodigo);
+concluirBtn.addEventListener("click", concluirTerminal);
