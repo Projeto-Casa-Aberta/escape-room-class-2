@@ -1,4 +1,4 @@
-const API_URL = "http://localhost:3000";
+const API_URL = "https://api-xe7m.onrender.com";
 
 const TERMINAL_ID = 2;
 
@@ -10,8 +10,17 @@ const caractere2 = document.getElementById("caractere2");
 
 const status = document.getElementById("status");
 
+// ===== NOVO: referência ao container do código =====
+const codigoContainer = document.querySelector('.codigo');
+// ===== NOVO: garante que comece piscando =====
+codigoContainer.classList.add('carregando');
+
 
 async function buscarCodigo() {
+
+    // ===== NOVO: para de piscar e ativa o glow fixo =====
+    codigoContainer.classList.remove('carregando');
+    codigoContainer.classList.add('carregado');
 
     status.textContent = "Buscando código...";
 
@@ -91,6 +100,21 @@ async function concluirTerminal() {
         console.log("Terminal concluído:", dados);
 
         status.textContent = "Terminal concluído com sucesso!";
+        status.className = "status sucesso";
+
+        // ========== NOVO ==========
+        // Muda o botão para "TERMINAL CONCLUÍDO" e aplica estilo verde
+        concluirBtn.textContent = "TERMINAL CONCLUÍDO";
+        concluirBtn.classList.remove('btn-concluir');
+        concluirBtn.classList.add('btn-concluido');
+        concluirBtn.disabled = true;
+        // ==========================
+
+        // (Opcional) Resetar o código para estado inicial, se quiser:
+        // codigoContainer.classList.remove('carregado');
+        // codigoContainer.classList.add('carregando');
+        // caractere1.textContent = "_";
+        // caractere2.textContent = "_";
 
     } catch (erro) {
 
@@ -100,6 +124,7 @@ async function concluirTerminal() {
         );
 
         status.textContent = `Erro: ${erro.message}`;
+        status.className = "status erro";
     }
 }
 
