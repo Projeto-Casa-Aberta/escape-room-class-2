@@ -72,7 +72,7 @@ body {
 }
 
 .titulo {
-    font-size: 30px;
+    font-size: 20px;
     font-weight: 900;
     letter-spacing: 8px;
     color: #ff2222;
@@ -128,6 +128,12 @@ body {
 ========================================================= */
 
 .btn-concluir {
+    width: 300px;
+    height: 50px;
+    font-size: 11px;
+    color: #ff2222;
+    font-weight: 900;
+    letter-spacing: 8px;   
     background:
         linear-gradient(135deg,
             #ffffff,
